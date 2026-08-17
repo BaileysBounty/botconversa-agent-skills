@@ -1,0 +1,4 @@
+interface:
+  display_name: "BotConversa Agent Upgrade"
+  short_description: "Crie e promova uma versão segura do agente"
+  default_prompt: "Use $botconversa-agent-upgrade para revisar meu agente e preparar uma versão isolada para teste."

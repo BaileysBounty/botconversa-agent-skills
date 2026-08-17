@@ -1,0 +1,4 @@
+interface:
+  display_name: "Check-up da Companhia BotConversa"
+  short_description: "Audite a configuração visível da companhia"
+  default_prompt: "Use $botconversa-company-checkup para analisar minha companhia e priorizar as melhores oportunidades."
