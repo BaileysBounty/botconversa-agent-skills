@@ -38,7 +38,7 @@ Guardar IDs e valores completos disponíveis, incluindo:
 - assistant ID, nome e `shared_with_block_ids`;
 - `is_synced` e campos obrigatórios ausentes;
 - modo de prompt e somente os campos do modo ativo;
-- starter e error messages;
+- `is_starter_for_gpt`, `starter_message` e `error_message`, registrando se a abertura é orientação interna para a IA ou mensagem estática visível ao contato;
 - modelo, idioma, versão, temperatura e tempos;
 - outputs customizados e instruções;
 - variáveis customizadas;

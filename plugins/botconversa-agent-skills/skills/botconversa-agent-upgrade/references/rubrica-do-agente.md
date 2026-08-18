@@ -64,6 +64,7 @@ Verifique:
 Procure:
 
 - abertura compatível com o objetivo;
+- coerência entre `is_starter_for_gpt` e `starter_message`: no modo `true`, o texto deve orientar internamente a IA a responder à primeira mensagem real, não ser uma saudação pronta ao contato; no modo `false`, deve ser a mensagem estática que o contato receberá;
 - uma pergunta por vez quando isso reduzir esforço;
 - confirmação de dados sensíveis ou irreversíveis;
 - respostas para ambiguidade, recusa, silêncio e mudança de assunto;
@@ -123,9 +124,11 @@ Verifique `error_message`, tempo de inatividade, instruções de falha e limites
 
 - saída segura quando faltar informação;
 - prevenção de loops;
-- mensagem útil em erro técnico;
+- mensagem útil em erro técnico, escrita para o contato que já está no WhatsApp, sem placeholders que seriam enviados literalmente e sem recomendar o próprio WhatsApp como canal alternativo;
 - critério objetivo para encaminhar a humano;
 - preservação do contexto necessário ao atendimento.
+
+Não confundir `error_message` com o status `failure` do agente nem com uma transferência. Ela é um fallback direto para exceção técnica; só pode prometer continuidade humana quando a rota correspondente estiver confirmada.
 
 ### 10. Integridade técnica
 

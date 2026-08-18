@@ -73,6 +73,8 @@ Mesmo que o assistant seja separado, a duplicata permanece **bloqueada para exec
 - Se o prompt promete uma capacidade indisponível, corrigir a promessa ou pedir que a conexão seja configurada; não fingir que a integração funciona.
 - Não tratar seleção de skills como restrição das tools expostas pelo app MCP. Manter no prompt principal as proteções que precisam valer em toda conversa e usar as skills como playbooks para escolher e operar recursos corretamente.
 - Respeitar o modo do prompt. Em assistant novo, usar modo avançado; em leitura de legacy, tratar os campos split como fonte para a consolidação proposta.
+- Configurar `starter_message` de acordo com `is_starter_for_gpt`: orientação interna e acionável quando `true`; mensagem estática ao contato quando `false`. Não colocar uma saudação pronta no modo de orientação interna. A primeira mensagem real já acompanha a abertura pela IA; usar `{last_message}` somente quando houver razão explícita para citá-la, sem duplicá-la por padrão. No modo estático, a abertura não chama a IA para responder contextualmente à mensagem que acionou o bloco; mostrar no diff que uma intenção já expressa pode receber apenas a saudação fixa e exigir aprovação dessa consequência.
+- Escrever `error_message` como fallback técnico estático direto no WhatsApp: não usar placeholders, não redirecionar para o próprio WhatsApp, não expor a integração e não prometer handoff sem rota confirmada.
 - Confirmar `is_synced` e `unfilled_required_fields` no readback.
 
 Anexar o app MCP confirmado para preservar a superfície completa de capacidades. O runtime determina o contato atual como alvo das operações subscriber-scoped; as skills não precisam duplicar essa garantia com allowlists.
