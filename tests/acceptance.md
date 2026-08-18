@@ -194,9 +194,33 @@ Execute estes casos em uma companhia de teste com o MCP BotConversa conectado. N
 
 **Esperado:** usar uma duração positiva em segundos definida pelas regras do negócio ou perguntar quando ela estiver ausente. Nunca inventar a duração.
 
+### 32. Semântica da mensagem inicial
+
+**Cenário:** ao preparar um novo agente, `is_starter_for_gpt=true`, mas o rascunho de `starter_message` contém uma saudação pronta como “Olá, sou a assistente virtual. Como posso ajudar?”.
+
+**Esperado:** detectar a inconsistência antes da escrita e propor uma orientação interna, por exemplo “O contato acabou de iniciar a conversa; responda à mensagem recebida de acordo com a intenção”. A primeira mensagem real já fica disponível para a resposta; `{last_message}` pode ser usado quando houver razão para citá-la, mas não deve duplicar a entrada por padrão. Se o objetivo for enviar exatamente a saudação pronta, `is_starter_for_gpt=false` é o modo correspondente, mas o dry-run deve avisar que essa abertura não chama a IA para responder contextualmente à mensagem que acionou o bloco e pode ignorar uma intenção já expressa. Mostrar modo, consequência e texto no dry-run e conferir ambos os campos no readback.
+
+### 33. Mensagem de erro dentro do WhatsApp
+
+**Cenário:** o rascunho de `error_message` diz “fale com nossa equipe pelo WhatsApp” e fornece o número do mesmo canal; não existe rota de erro ou handoff humano confirmada.
+
+**Esperado:** tratar o campo como fallback estático direto para exceção técnica do assistant, remover a recomendação do próprio WhatsApp, não usar placeholders e não prometer transferência. Usar mensagem curta como “Desculpe, não consegui processar sua mensagem agora. Tente novamente em alguns instantes.” Só mencionar outro canal ou continuidade humana quando a configuração ou as regras do negócio sustentarem essa afirmação.
+
+### 34. Placeholder literal na mensagem de erro
+
+**Cenário:** o rascunho de `error_message` contém apenas “Não consegui responder agora, {primeiro-nome}. Tente novamente.” e não apresenta redirecionamento de canal nem promessa de handoff.
+
+**Esperado:** detectar o placeholder mesmo isoladamente e removê-lo, pois `error_message` é enviada como texto estático e não interpola variáveis. O teste não pode depender também de uma recomendação ao WhatsApp ou de uma rota humana ausente.
+
+### 35. Check-up detecta abertura e erro incoerentes
+
+**Prompt:** `$botconversa-company-checkup verifique se meus agentes tratam corretamente a mensagem inicial e a contingência de erro.`
+
+**Esperado:** permanecer somente em leitura, correlacionar `is_starter_for_gpt` com `starter_message` e sinalizar como inferência uma saudação pronta no modo de orientação interna ou uma instrução no modo estático. Sinalizar também `error_message` que redireciona ao próprio WhatsApp, usa placeholders ou promete handoff sem rota observável. Não confundir esse campo com o status `failure`; propor correção apenas em uma v2 isolada.
+
 ## Validação do artefato
 
-### 32. Scanner de publicação
+### 36. Scanner de publicação
 
 **Comandos:**
 
@@ -207,7 +231,7 @@ python3 scripts/scan_public_content.py
 
 **Esperado:** os casos sintéticos detectam padrões proibidos e ignoram placeholders seguros; o repositório atual não contém caminho local, URL privada, credencial, endpoint interno, hash de commit ou referência a arquivo de implementação.
 
-### 33. Instalação e remoção local
+### 37. Instalação e remoção local
 
 **Procedimento:** em desenvolvimento, definir `BOTCONVERSA_ALLOW_UNRELEASED=1`, apontar `BOTCONVERSA_SKILLS_DEST` para um diretório temporário vazio, executar `install.sh` duas vezes e depois `uninstall.sh` duas vezes. Em release, não usar a exceção e executar a partir da tag exata.
 

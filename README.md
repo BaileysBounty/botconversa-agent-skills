@@ -18,10 +18,10 @@ Para usar o agente criado pelo runtime pack, a companhia também precisa ter o a
 
 ## Instalar no Codex CLI ou no Codex do ChatGPT Desktop
 
-Adicione o marketplace deste repositório público e instale a release `v0.2.1`:
+Adicione o marketplace deste repositório público e instale a release `v0.2.2`:
 
 ```bash
-codex plugin marketplace add BaileysBounty/botconversa-agent-skills --ref v0.2.1 &&
+codex plugin marketplace add BaileysBounty/botconversa-agent-skills --ref v0.2.2 &&
 codex plugin add botconversa-agent-skills@botconversa
 ```
 
@@ -34,7 +34,7 @@ Se o marketplace privado da `v0.2.0` já estiver configurado, remova a instalaç
 ```bash
 codex plugin remove botconversa-agent-skills@botconversa &&
 codex plugin marketplace remove botconversa &&
-codex plugin marketplace add BaileysBounty/botconversa-agent-skills --ref v0.2.1 &&
+codex plugin marketplace add BaileysBounty/botconversa-agent-skills --ref v0.2.2 &&
 codex plugin add botconversa-agent-skills@botconversa
 ```
 
@@ -45,7 +45,7 @@ No Claude Cowork, dentro do aplicativo Desktop, abra **Customize → Plugins →
 No Claude Code, fixe a release por comando:
 
 ```bash
-claude plugin marketplace add BaileysBounty/botconversa-agent-skills@v0.2.1 &&
+claude plugin marketplace add BaileysBounty/botconversa-agent-skills@v0.2.2 &&
 claude plugin install botconversa-agent-skills@botconversa --scope user
 ```
 
@@ -56,7 +56,7 @@ Para substituir o marketplace privado da `v0.2.0` no Claude Code:
 ```bash
 claude plugin uninstall botconversa-agent-skills@botconversa &&
 claude plugin marketplace remove botconversa &&
-claude plugin marketplace add BaileysBounty/botconversa-agent-skills@v0.2.1 &&
+claude plugin marketplace add BaileysBounty/botconversa-agent-skills@v0.2.2 &&
 claude plugin install botconversa-agent-skills@botconversa --scope user
 ```
 
@@ -66,7 +66,7 @@ Cole este comando em uma task do Codex CLI ou do Codex no ChatGPT Desktop:
 
 ```text
 $skill-installer instale do repositório BaileysBounty/botconversa-agent-skills,
-na ref v0.2.1 e usando o método git, estas skills:
+na ref v0.2.2 e usando o método git, estas skills:
 
 plugins/botconversa-agent-skills/skills/botconversa-company-checkup
 plugins/botconversa-agent-skills/skills/botconversa-agent-upgrade
@@ -78,8 +78,8 @@ Esse fallback instala somente as skills; o plugin é o caminho recomendado.
 ## Fallback: instalar por um comando de terminal
 
 ```bash
-git clone --depth 1 --branch v0.2.1 https://github.com/BaileysBounty/botconversa-agent-skills.git "$HOME/.botconversa-agent-skills-v0.2.1" &&
-"$HOME/.botconversa-agent-skills-v0.2.1/install.sh"
+git clone --depth 1 --branch v0.2.2 https://github.com/BaileysBounty/botconversa-agent-skills.git "$HOME/.botconversa-agent-skills-v0.2.2" &&
+"$HOME/.botconversa-agent-skills-v0.2.2/install.sh"
 ```
 
 O instalador valida o conteúdo, exige checkout limpo exatamente na tag correspondente a `VERSION`, cria links em `${CODEX_HOME:-$HOME/.codex}/skills` e nunca substitui silenciosamente arquivos existentes. Esse caminho é específico do Codex e existe apenas como compatibilidade.

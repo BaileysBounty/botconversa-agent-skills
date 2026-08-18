@@ -301,6 +301,17 @@ def main() -> int:
                 "A skill read-only cita tools de mutação: " + ", ".join(mutating_mentions)
             )
 
+        checkup_guards = {
+            "is_starter_for_gpt=true": "semantica da abertura no check-up",
+            "ou `false` com texto meramente instrucional": "ramo estatico da abertura no check-up",
+            "já esteja no WhatsApp": "mensagem de erro adequada ao canal no check-up",
+            "placeholders que seriam enviados literalmente": "placeholders literais na mensagem de erro",
+            "status `failure`": "distincao entre erro tecnico e failure",
+        }
+        for fragment, label in checkup_guards.items():
+            if fragment not in checkup_text:
+                errors.append(f"Check-up sem {label}: {fragment}")
+
         capabilities_file = checkup_dir / "references" / "capacidades.md"
         if capabilities_file.is_file():
             capabilities_text = capabilities_file.read_text(encoding="utf-8")
@@ -328,6 +339,10 @@ def main() -> int:
             "drift": "detecção de mudanças concorrentes",
             "Preservar todas as tools": "superficie MCP completa no upgrade",
             "contato atual da conversa": "fronteira deterministica do subscriber",
+            "`is_starter_for_gpt`": "semantica da abertura no upgrade",
+            "não chama a IA para responder contextualmente": "consequencia da abertura estatica no upgrade",
+            "já está no WhatsApp": "mensagem de erro adequada ao canal",
+            "placeholders que seriam enviados literalmente": "placeholders literais no erro do upgrade",
         }
         for fragment, label in required_guards.items():
             if fragment not in upgrade_text:
@@ -388,6 +403,7 @@ def main() -> int:
                     "atendimento humano": "fallback humano",
                     "horário comercial": "uso de contexto temporal",
                     "histórico do chat": "minimizacao do historico",
+                    "conversa já acontece no WhatsApp": "consciencia do canal atual",
                 }
                 for fragment, label in base_guards.items():
                     if fragment not in base_text:
@@ -493,6 +509,11 @@ def main() -> int:
             "contato de teste": "teste de mutacoes internas",
             "destinos externos de teste": "teste seguro de efeitos externos",
             "não funcionam como permissões": "modulos como conhecimento",
+            "`is_starter_for_gpt=true`": "semantica da abertura pela IA",
+            "`is_starter_for_gpt=false`": "semantica da abertura estatica",
+            "não chama a IA para responder contextualmente": "consequencia da abertura estatica",
+            "Não usar placeholders nesse campo": "erro estatico sem placeholders",
+            "não executa o encaminhamento": "limite da mensagem de erro",
         }
         for fragment, label in protocol_guards.items():
             if fragment not in runtime_protocol:
@@ -529,6 +550,10 @@ def main() -> int:
             "Contratos de calendário",
             "Cardinalidade e movimento do Kanban",
             "Duração da pausa de automação",
+            "Semântica da mensagem inicial",
+            "Mensagem de erro dentro do WhatsApp",
+            "Placeholder literal na mensagem de erro",
+            "Check-up detecta abertura e erro incoerentes",
         }
         for case_name in sorted(required_runtime_cases):
             if case_name not in acceptance_text:

@@ -19,8 +19,8 @@ Se qualquer leitura essencial falhar de forma persistente, interromper antes de 
 Usar o `pack_version` do manifesto nos nomes, por exemplo:
 
 ```text
-BC - CRM do contato - pack 0.2.1
-[TESTE] Agente de vendas - runtime pack 0.2.1
+BC - CRM do contato - pack 0.2.2
+[TESTE] Agente de vendas - runtime pack 0.2.2
 ```
 
 Não escolher um recurso existente apenas pela semelhança do nome.
@@ -73,12 +73,25 @@ Produzir um diff semântico antes da escrita:
 
 A política-base deve ficar no prompt principal. Os módulos especializam o uso das tools e podem ser carregados conforme o contexto, mas não funcionam como autorização.
 
+### Semântica da abertura e da mensagem de erro
+
+Definir e mostrar no diff os três campos como uma decisão única:
+
+- Com `is_starter_for_gpt=true`, tratar `starter_message` como orientação interna para a IA compor a primeira resposta. Escrever uma instrução como “O contato acabou de iniciar a conversa. Responda à mensagem recebida de acordo com a intenção; se for apenas uma saudação, apresente-se brevemente e pergunte como pode ajudar”. Não escrever a fala final do assistente, como “Olá, sou a assistente...”, porque esse texto não é a mensagem enviada diretamente ao contato.
+- Com `is_starter_for_gpt=false`, tratar `starter_message` como a mensagem estática que o contato receberá. Nesse modo, uma saudação pronta é apropriada e não deve ser escrita como instrução para a IA. A abertura não chama a IA para responder contextualmente à mensagem que acionou o bloco; mostrar no dry-run que uma intenção já expressa pelo contato pode receber apenas o texto estático e exigir que o usuário aceite essa consequência.
+- No modo de abertura pela IA, a mensagem real que iniciou a conversa já fica disponível para a resposta. `{last_message}` é suportado em `starter_message`, mas só deve ser usado quando a orientação precisar citá-la explicitamente; não duplicar a entrada por padrão.
+- Tratar `error_message` como fallback estático exibido diretamente ao contato no WhatsApp quando ocorre uma exceção técnica do assistant. Usar texto curto, claro e compatível com falha temporária, sem expor OpenAI ou detalhes internos. Não usar placeholders nesse campo, pois ele não oferece interpolação de variáveis.
+- Nunca orientar “fale conosco pelo WhatsApp”, fornecer o mesmo número como alternativa ou sugerir que o contato mude para o canal em que já está. Mencionar outro canal somente quando ele estiver confirmado nas regras do negócio.
+- Não prometer transferência ou resposta humana apenas por causa de `error_message`. Mencionar continuidade pela equipe somente quando uma rota de erro ou handoff correspondente tiver sido confirmada; a mensagem por si só não executa o encaminhamento.
+
+Exemplo seguro sem rota de handoff confirmada: “Desculpe, não consegui processar sua mensagem agora. Tente novamente em alguns instantes.”
+
 ## 5. Portão de aprovação administrativa
 
 Listar as escritas exatas, na ordem esperada:
 
 1. uma chamada `create_skill` para cada módulo novo;
-2. uma chamada `create_gpt_flow` para o laboratório, com prompt, IDs das skills e dependências aprovadas.
+2. uma chamada `create_gpt_flow` para o laboratório, com prompt, IDs das skills, dependências, modo/texto de abertura e mensagem de erro aprovados.
 
 Incluir nomes, conteúdo resumido, app MCP, calendários, campos relevantes e o que ficará intocado. Prosseguir somente quando o usuário autorizar explicitamente esse pacote.
 
@@ -122,6 +135,7 @@ Depois, chamar `create_gpt_flow` uma única vez com o conjunto verificado. Reler
 - lista completa de skills pretendidas;
 - app MCP e calendários aprovados;
 - modelo, idioma e demais campos deliberadamente preservados;
+- `is_starter_for_gpt`, `starter_message` e `error_message` com a semântica e o texto aprovados;
 - `is_synced=true` e nenhum campo obrigatório ausente.
 
 Se `create_gpt_flow` retornar timeout, erro de transporte ou resultado ambíguo, não repetir. Paginar `list_flows`, procurar o nome exato e inspecionar cada correspondência. Aceitar como reconciliado somente um flow cuja configuração completa coincida com o manifesto; nos demais casos, parar e pedir decisão.

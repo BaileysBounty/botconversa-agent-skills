@@ -9,7 +9,7 @@
       "name": "botconversa-agent-skills",
       "source": "./plugins/botconversa-agent-skills",
       "description": "Audite, revise e evolua agentes do BotConversa com workflows reutilizáveis.",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "author": {
         "name": "BotConversa"
       },

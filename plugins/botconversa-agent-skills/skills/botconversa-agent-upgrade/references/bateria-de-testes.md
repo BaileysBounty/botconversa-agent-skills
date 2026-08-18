@@ -27,6 +27,7 @@ Antes da conversa manual, confirmar por readback:
 - skills clonadas contêm o prompt aprovado;
 - modelo, idioma, versão, apps e calendários necessários estão disponíveis;
 - outputs e conexões GPT observáveis correspondem ao desenho.
+- `is_starter_for_gpt`, `starter_message` e `error_message` correspondem ao modo e aos textos aprovados;
 - cada efeito externo possui conta, calendário, destino e dados destinados a teste; quando isso não for confirmável, os casos mutantes permanecem bloqueados.
 - o prompt principal mantém contexto do contato atual, privacidade, confirmação proporcional, prevenção de duplicidade e fallback humano;
 - o app MCP permanece anexado com sua superfície completa, e um contato de teste é usado para mutações internas.
@@ -39,7 +40,7 @@ Adapte a linguagem e os dados ao negócio sem remover categorias relevantes.
 
 ### T-01 — Caminho principal
 
-Usar um pedido típico completo. Validar objetivo, tom, ordem das perguntas, uso correto das regras e saída final.
+Usar um pedido típico completo. Quando a abertura for gerada pela IA, iniciar com uma mensagem realista do contato e validar que ela é respondida, em vez de receber uma saudação fixa que ignora a intenção. Quando a abertura for estática, validar o texto exato enviado ao contato e demonstrar que a IA não responde contextualmente à mensagem que acionou o bloco nessa abertura; essa consequência deve coincidir com o diff aprovado. Confirmar também objetivo, tom, ordem das perguntas, uso correto das regras e saída final.
 
 ### T-02 — Dados incompletos
 
@@ -83,7 +84,7 @@ Produzir condições de sucesso, falha, inatividade e cada custom output relevan
 
 ### T-12 — Erro e recuperação
 
-Simular falha técnica ou resposta inválida quando possível. Validar mensagem de erro, ausência de loop e próximo passo útil.
+Simular falha técnica ou resposta inválida quando possível. Validar que a mensagem de erro é adequada ao contato que já está no WhatsApp, não recomenda o próprio WhatsApp como alternativa, não expõe a integração, não promete handoff sem rota confirmada e oferece o menor próximo passo útil sem criar loop.
 
 ### T-13 — Encaminhamento humano
 

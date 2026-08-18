@@ -52,6 +52,13 @@ Reservar P0 para uma configuração explicitamente inválida ou incapaz de execu
 - Condição: existem blocos GPT e `openai_api_key_connected=false`.
 - Relacionar com `is_synced`; se todos estiverem sincronizados, apresentar como risco/configuração a confirmar, não quebra.
 
+### GPT-P1-03 — abertura configurada com semântica invertida
+
+- Sinal: `is_starter_for_gpt=true`, mas `starter_message` está redigida como fala pronta ao contato em vez de orientação interna para a IA responder à primeira mensagem real; ou `false` com texto meramente instrucional que seria enviado literalmente.
+- Classificação: `Inferido`, porque a inconsistência textual é observável, mas a qualidade da abertura exige teste runtime.
+- Recomendação: confirmar a intenção. Para abertura gerada pela IA, escrever orientação acionável; para saudação estática, usar o modo direto ao contato. Mostrar ambos os campos no diff de uma v2 isolada.
+- Cuidado: `{last_message}` é suportado na orientação interna, mas a mensagem real já acompanha a abertura; não exigir nem duplicar o conteúdo por padrão.
+
 ### SKILL-P1-01 — instruções incompatíveis
 
 - Condição: prompt do assistant e prompts das skills anexadas contêm instruções mutuamente excludentes sobre objetivo, tom, coleta, transferência ou uso de ferramentas.
@@ -104,6 +111,13 @@ P2 exige indícios positivos do caso de uso. A simples ausência de um recurso n
 
 - Sinais: prompt promete agenda ou app MCP específico, mas o assistant não possui a integração configurada.
 - Se a opção está indisponível, pode subir para P0/P1; se a promessa veio apenas da interpretação textual, manter como `Inferido`.
+
+### GPT-P2-02 — contingência incoerente com o canal atual
+
+- Sinal: `error_message` recomenda falar pelo WhatsApp ou fornece o próprio número como alternativa, embora o contato já esteja no WhatsApp; contém placeholders que seriam enviados literalmente; ou promete handoff sem uma rota de erro observável.
+- Classificação: `Inferido` para o impacto conversacional, com texto e canal como evidências observáveis.
+- Recomendação: usar fallback técnico estático, curto e sem placeholders; não expor a integração nem prometer encaminhamento não comprovado. Preparar a correção em uma v2 e testar a rota de erro manualmente.
+- Cuidado: não confundir `error_message` com o status `failure` produzido pelo agente.
 
 ### RUNTIME-P2-01 — operação repetitiva compatível com módulo runtime
 
