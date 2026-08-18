@@ -24,6 +24,10 @@ Este repositório deve conter somente conhecimento operacional necessário para 
 2. Usar somente IDs e dados claramente sintéticos em exemplos.
 3. Executar `python3 scripts/scan_public_content.py` e `python3 scripts/validate_pack.py` antes de commit, release ou compartilhamento.
 4. Submeter qualquer nova tool, campo ou comportamento do MCP a revisão de produto e segurança antes de tratá-lo como contrato público.
-5. Não alterar a visibilidade do repositório nem publicar um artefato sem revisar também o histórico Git e os metadados de autoria.
+5. Não publicar uma release sem revisar também o diff, o histórico Git, os logs públicos e os metadados de autoria.
 
 O scanner é um gate adicional, não uma garantia absoluta. A revisão humana desta fronteira continua obrigatória.
+
+## Relatar uma vulnerabilidade
+
+Não abra uma issue pública com detalhes sensíveis. Use **Security → Report a vulnerability** neste repositório para enviar um relato privado aos mantenedores.

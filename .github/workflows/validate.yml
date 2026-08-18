@@ -25,8 +25,13 @@ jobs:
         run: |
           test_root="$(mktemp -d)"
           test_dest="$test_root/skills"
-          BOTCONVERSA_ALLOW_UNRELEASED=1 BOTCONVERSA_SKILLS_DEST="$test_dest" ./install.sh
-          BOTCONVERSA_ALLOW_UNRELEASED=1 BOTCONVERSA_SKILLS_DEST="$test_dest" ./install.sh
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            BOTCONVERSA_SKILLS_DEST="$test_dest" ./install.sh
+            BOTCONVERSA_SKILLS_DEST="$test_dest" ./install.sh
+          else
+            BOTCONVERSA_ALLOW_UNRELEASED=1 BOTCONVERSA_SKILLS_DEST="$test_dest" ./install.sh
+            BOTCONVERSA_ALLOW_UNRELEASED=1 BOTCONVERSA_SKILLS_DEST="$test_dest" ./install.sh
+          fi
           test "$(find "$test_dest" -mindepth 1 -maxdepth 1 -type l | wc -l | tr -d ' ')" = "3"
           BOTCONVERSA_SKILLS_DEST="$test_dest" ./uninstall.sh
           BOTCONVERSA_SKILLS_DEST="$test_dest" ./uninstall.sh

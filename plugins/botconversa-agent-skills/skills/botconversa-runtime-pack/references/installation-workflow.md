@@ -19,8 +19,8 @@ Se qualquer leitura essencial falhar de forma persistente, interromper antes de 
 Usar o `pack_version` do manifesto nos nomes, por exemplo:
 
 ```text
-BC - CRM do contato - pack 0.2.0
-[TESTE] Agente de vendas - runtime pack 0.2.0
+BC - CRM do contato - pack 0.2.1
+[TESTE] Agente de vendas - runtime pack 0.2.1
 ```
 
 Não escolher um recurso existente apenas pela semelhança do nome.
