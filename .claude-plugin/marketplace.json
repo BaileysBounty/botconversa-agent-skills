@@ -1,0 +1,22 @@
+{
+  "name": "botconversa",
+  "owner": {
+    "name": "BotConversa"
+  },
+  "description": "Skills oficiais para auditar, revisar e evoluir agentes do BotConversa.",
+  "plugins": [
+    {
+      "name": "botconversa-agent-skills",
+      "source": "./plugins/botconversa-agent-skills",
+      "description": "Audite, revise e evolua agentes do BotConversa com workflows reutilizáveis.",
+      "version": "0.2.0",
+      "author": {
+        "name": "BotConversa"
+      },
+      "homepage": "https://botconversa.com.br",
+      "repository": "https://github.com/BaileysBounty/botconversa-agent-skills",
+      "keywords": ["botconversa", "mcp", "agents", "whatsapp"],
+      "category": "Productivity"
+    }
+  ]
+}

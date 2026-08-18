@@ -5,9 +5,12 @@ set -euo pipefail
 repo_root="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 codex_root="${CODEX_HOME:-${HOME:?HOME is required}/.codex}"
 destination_root="${BOTCONVERSA_SKILLS_DEST:-$codex_root/skills}"
+plugin_root="$repo_root/plugins/botconversa-agent-skills"
+version_file="$repo_root/VERSION"
 skills=(
   "botconversa-company-checkup"
   "botconversa-agent-upgrade"
+  "botconversa-runtime-pack"
 )
 
 if [[ $# -gt 0 ]]; then
@@ -15,10 +18,41 @@ if [[ $# -gt 0 ]]; then
   exit 1
 fi
 
+if [[ ! -f "$version_file" ]]; then
+  echo "Pack inválido: VERSION ausente." >&2
+  exit 1
+fi
+
+pack_version="$(tr -d '[:space:]' < "$version_file")"
+if [[ -z "$pack_version" ]]; then
+  echo "Pack inválido: VERSION vazio." >&2
+  exit 1
+fi
+
+if [[ "${BOTCONVERSA_ALLOW_UNRELEASED:-0}" != "1" ]]; then
+  expected_tag="v$pack_version"
+  current_tag="$(git -C "$repo_root" describe --tags --exact-match HEAD 2>/dev/null || true)"
+  if [[ "$current_tag" != "$expected_tag" ]]; then
+    echo "Release inválida: o checkout deve estar exatamente na tag $expected_tag." >&2
+    exit 1
+  fi
+  if [[ -n "$(git -C "$repo_root" status --porcelain --untracked-files=all)" ]]; then
+    echo "Release inválida: o checkout possui alterações locais." >&2
+    exit 1
+  fi
+fi
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "Python 3 é necessário para validar o pack antes da instalação." >&2
+  exit 1
+fi
+
+python3 "$repo_root/scripts/validate_pack.py"
+
 mkdir -p "$destination_root"
 
 for skill in "${skills[@]}"; do
-  source_dir="$repo_root/skills/$skill"
+  source_dir="$plugin_root/skills/$skill"
   target="$destination_root/$skill"
 
   if [[ ! -f "$source_dir/SKILL.md" ]]; then
@@ -39,7 +73,7 @@ for skill in "${skills[@]}"; do
 done
 
 for skill in "${skills[@]}"; do
-  source_dir="$repo_root/skills/$skill"
+  source_dir="$plugin_root/skills/$skill"
   target="$destination_root/$skill"
   if [[ ! -L "$target" ]]; then
     ln -s "$source_dir" "$target"

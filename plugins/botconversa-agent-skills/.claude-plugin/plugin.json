@@ -1,0 +1,12 @@
+{
+  "name": "botconversa-agent-skills",
+  "version": "0.2.0",
+  "description": "Audite, revise e evolua agentes do BotConversa com workflows reutilizáveis.",
+  "author": {
+    "name": "BotConversa",
+    "url": "https://botconversa.com.br"
+  },
+  "homepage": "https://botconversa.com.br",
+  "repository": "https://github.com/BaileysBounty/botconversa-agent-skills",
+  "keywords": ["botconversa", "mcp", "agents", "whatsapp"]
+}

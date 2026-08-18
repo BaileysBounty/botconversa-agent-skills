@@ -29,6 +29,9 @@ Produzir uma revisão baseada em evidências, preparar uma versão separada para
 8. Revalidar o estado imediatamente antes da promoção e reler tudo que foi escrito. Interromper se houver drift ou readback divergente.
 9. Separar claramente fatos observados, inferências e itens não verificáveis. Não alegar que conversas, desempenho ou blocos não GPT foram testados quando as tools não oferecem essa evidência.
 10. Não apagar automaticamente o fluxo de teste, skills clonadas ou snapshots. Mantê-los como referência de rollback até o usuário decidir o descarte.
+11. Tratar skills como conhecimento operacional, não como permissões. Preservar todas as tools disponibilizadas pelo app MCP e não criar allowlists artificiais por módulo.
+12. Respeitar a fronteira determinística do runtime: toda ação sobre subscriber ou card afeta o contato atual da conversa, nunca outro contato citado na mensagem.
+13. Não assumir que um flow de teste transforma calendários ou sistemas externos em sandbox. Usar destinos externos de teste e confirmar ações sensíveis quando necessário.
 
 ## Fluxo de trabalho
 
@@ -50,6 +53,7 @@ Produzir uma revisão baseada em evidências, preparar uma versão separada para
 
 - Aplicar a rubrica somente ao que for observável.
 - Priorizar falhas confirmadas, riscos confirmados, inconsistências prováveis e oportunidades.
+- Quando a proposta acrescentar CRM do contato, handoff, Kanban, agenda, flows, sequências ou integrações, selecionar política-base e módulos com a skill `botconversa-runtime-pack` em vez de espalhar instruções operacionais duplicadas.
 - Entregar o diagnóstico, o diff proposto e as limitações antes de escrever.
 - Mostrar exatamente quais recursos seriam criados. Aceitar como autorização da v2 apenas um pedido explícito e delimitado, como “crie essa v2”; nunca inferir autorização de produção.
 
@@ -59,6 +63,8 @@ Produzir uma revisão baseada em evidências, preparar uma versão separada para
 - Preferir `create_gpt_flow` para um agente simples iniciado diretamente por GPT.
 - Usar `duplicate_flow` somente como cópia para inspeção quando for necessário preservar uma estrutura mais complexa. Não executar ou chamar essa cópia de segura até a revisão manual obrigatória de todos os blocos não GPT.
 - Clonar cada skill que receber alterações e anexar os novos IDs à v2.
+- Manter no prompt principal as regras permanentes de privacidade, escopo do contato atual, confirmação proporcional, prevenção de duplicidade, falha segura e handoff. Skills runtime especializam domínios sem restringir as tools disponíveis.
+- Anexar o app MCP confirmado para que a v2 preserve a superfície completa de capacidades do agente.
 - Nomear recursos de modo inequívoco, por exemplo `[TESTE] Qualificação — v2`.
 - Reler flow, GPT block, assistant e skills criados; registrar os IDs e o estado de sincronização.
 - Verificar campanhas, grupos de palavras-chave e steps de sequências antes de afirmar que a v2 não possui entrada de produção.
@@ -67,6 +73,7 @@ Produzir uma revisão baseada em evidências, preparar uma versão separada para
 
 - Montar a bateria proporcional ao comportamento alterado.
 - Deixar explícito que o MCP atual não executa o simulador nem lê a conversa de teste; solicitar evidências manuais.
+- Testar mutações internas com um contato de teste. Antes de testar qualquer efeito externo, confirmar contas, calendários, destinos e dados inequivocamente destinados a teste. Se isso não puder ser comprovado, testar apenas leitura, decisão e pedido de confirmação.
 - Não marcar um caso como aprovado sem saída observada. Registrar falhas, desvios aceitos e itens não executados.
 
 ### 6. Promover somente após validação

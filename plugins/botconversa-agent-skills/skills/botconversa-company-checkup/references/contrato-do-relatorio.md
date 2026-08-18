@@ -83,4 +83,4 @@ Quando um domínio for parcial, acrescentar o denominador conhecido ou indicar �
 
 ## 8. Próximo passo seguro
 
-Encerrar com uma ação pequena e reversível. Se a principal recomendação envolver um agente GPT, propor criar e testar uma versão isolada usando `$botconversa-agent-upgrade`, sem modificar o original nesta skill. Para outros recursos, apresentar a mudança como plano pendente de aprovação explícita.
+Encerrar com uma ação pequena e reversível. Se a principal recomendação envolver revisar um agente GPT existente, propor a skill `botconversa-agent-upgrade`. Se envolver adicionar capacidades operacionais modulares, propor o dry-run da skill `botconversa-runtime-pack`. Em ambos os casos, criar e testar uma versão isolada sem modificar o original nesta skill. Para outros recursos, apresentar a mudança como plano pendente de aprovação explícita.

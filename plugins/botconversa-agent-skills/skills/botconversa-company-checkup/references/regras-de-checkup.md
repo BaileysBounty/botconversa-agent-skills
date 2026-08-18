@@ -58,6 +58,13 @@ Reservar P0 para uma configuração explicitamente inválida ou incapaz de execu
 - Classificação: `Inferido`, pois exige interpretação semântica.
 - Citar apenas trechos mínimos e pedir validação da intenção do negócio.
 
+### RUNTIME-P1-01 — ação sensível prometida sem proteção observável
+
+- Sinal: prompt ou skill promete agendamento, integração externa, acionamento de automação ou outra mutação relevante, mas não há regra observável de contato atual, recurso inequívoco, confirmação proporcional, prevenção de duplicidade, tratamento de retorno inconclusivo e handoff.
+- Classificação: `Inferido`, porque o connector não executa a conversa nem expõe necessariamente a permissão granular de cada tool runtime.
+- Manter P1 somente quando a ação sensível for parte central e explicitamente prometida pelo agente; caso contrário, classificar como P2.
+- Recomendação: validar a intenção e preparar política-base mais o pack operacional completo em uma versão de teste com a skill `botconversa-runtime-pack`, destacando os módulos mais relevantes para aquele agente.
+
 ### KEYWORD-P1-01 — sobreposição de keywords ativas
 
 - Condição: o mesmo termo normalizado aparece em mais de um grupo ativo e os tipos de correspondência podem competir.
@@ -97,6 +104,13 @@ P2 exige indícios positivos do caso de uso. A simples ausência de um recurso n
 
 - Sinais: prompt promete agenda ou app MCP específico, mas o assistant não possui a integração configurada.
 - Se a opção está indisponível, pode subir para P0/P1; se a promessa veio apenas da interpretação textual, manter como `Inferido`.
+
+### RUNTIME-P2-01 — operação repetitiva compatível com módulo runtime
+
+- Sinais: o objetivo e as regras observadas exigem de forma recorrente CRM do contato, handoff, Kanban, agenda, flows, sequências ou integração externa; o agente ainda concentra essas regras no prompt ou não possui instrução operacional específica.
+- Confirmar o caso de uso e a opção de app MCP disponível antes de recomendar instalação.
+- Recomendar o pack completo para preservar o conhecimento de toda a superfície MCP e destacar os módulos que resolvem o comportamento observado. Não afirmar que um módulo restringe permissões ou tools.
+- Próximo passo: dry-run de um novo flow de laboratório com a skill `botconversa-runtime-pack`; nenhuma alteração nesta skill.
 
 ### SKILL-P2-01 — conhecimento repetido e pouco modular
 

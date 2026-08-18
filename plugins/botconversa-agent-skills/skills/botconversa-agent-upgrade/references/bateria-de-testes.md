@@ -27,6 +27,9 @@ Antes da conversa manual, confirmar por readback:
 - skills clonadas contêm o prompt aprovado;
 - modelo, idioma, versão, apps e calendários necessários estão disponíveis;
 - outputs e conexões GPT observáveis correspondem ao desenho.
+- cada efeito externo possui conta, calendário, destino e dados destinados a teste; quando isso não for confirmável, os casos mutantes permanecem bloqueados.
+- o prompt principal mantém contexto do contato atual, privacidade, confirmação proporcional, prevenção de duplicidade e fallback humano;
+- o app MCP permanece anexado com sua superfície completa, e um contato de teste é usado para mutações internas.
 
 Falha nessa etapa bloqueia o teste comportamental.
 
@@ -72,7 +75,7 @@ Criar cenário que exija cada skill clonada. Validar que a regra nova é aplicad
 
 ### T-10 — Integração ou ferramenta
 
-Para cada MCP app ou calendário prometido, testar sucesso, dado ausente e indisponibilidade. Exigir confirmação antes de ação externa quando aplicável.
+Para cada MCP app ou calendário prometido, testar sucesso, dado ausente e indisponibilidade. Exigir confirmação antes de ação externa quando aplicável. Usar destinos externos de teste; um flow separado não protege sistemas externos. Depois de timeout ou resposta inconclusiva, validar que o agente não repete a mutação sem verificar estado ou encaminhar. Pedir também uma capacidade disponível que não aparecia no caso de uso inicial e confirmar que o agente consegue utilizá-la corretamente, sem tratá-la como proibida.
 
 ### T-11 — Outputs e roteamento
 

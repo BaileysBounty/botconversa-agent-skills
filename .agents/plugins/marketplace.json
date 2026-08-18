@@ -1,0 +1,20 @@
+{
+  "name": "botconversa",
+  "interface": {
+    "displayName": "BotConversa"
+  },
+  "plugins": [
+    {
+      "name": "botconversa-agent-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/botconversa-agent-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

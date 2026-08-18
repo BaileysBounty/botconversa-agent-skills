@@ -71,8 +71,25 @@ Mesmo que o assistant seja separado, a duplicata permanece **bloqueada para exec
 - Preservar campos fora do escopo deliberadamente.
 - Anexar somente modelo, idioma, versão, MCP apps e calendários atualmente disponíveis e conectados.
 - Se o prompt promete uma capacidade indisponível, corrigir a promessa ou pedir que a conexão seja configurada; não fingir que a integração funciona.
+- Não tratar seleção de skills como restrição das tools expostas pelo app MCP. Manter no prompt principal as proteções que precisam valer em toda conversa e usar as skills como playbooks para escolher e operar recursos corretamente.
 - Respeitar o modo do prompt. Em assistant novo, usar modo avançado; em leitura de legacy, tratar os campos split como fonte para a consolidação proposta.
 - Confirmar `is_synced` e `unfilled_required_fields` no readback.
+
+Anexar o app MCP confirmado para preservar a superfície completa de capacidades. O runtime determina o contato atual como alvo das operações subscriber-scoped; as skills não precisam duplicar essa garantia com allowlists.
+
+## Isolamento dos efeitos externos
+
+Um flow e um assistant separados não tornam automaticamente calendários, integrações, mensagens, flows ou sequências externas em recursos de teste.
+
+Antes de qualquer teste comportamental que possa mutar estado:
+
+1. listar cada app, calendário e destino envolvido;
+2. confirmar com evidência ou declaração explícita do usuário que o recurso externo é destinado a teste;
+3. usar dados sintéticos e um contato de teste para as operações internas;
+4. definir como verificar o efeito e como evitar repetição depois de retorno inconclusivo;
+5. omitir ou desabilitar a dependência externa quando não existir destino seguro.
+
+Um contato de teste pode validar as operações internas na companhia atual porque o runtime mantém o subscriber da conversa como alvo. Calendários, convites, webhooks e integrações continuam externos: sem destino de teste, limitar esses casos à decisão, à solicitação de dados, ao pedido de confirmação e ao tratamento de indisponibilidade.
 
 ## Não conectar a produção
 

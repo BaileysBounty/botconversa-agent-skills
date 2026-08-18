@@ -9,7 +9,7 @@ Use somente as 21 operações abaixo durante o check-up. Qualquer tool BotConver
 | Conexão | `get_connection_info` | Companhia conectada, proprietário autenticado e acesso `read` ou `write` | Não comprova saúde da operação |
 | Configurações | `get_company_settings` | Fuso, idioma, motivos de encerramento habilitados e presença de chave OpenAI | Expõe somente essas configurações |
 | Flows e pastas | `list_folders`, `list_flows` | Árvore de pastas; IDs, nomes, criação e pasta dos flows | Não retorna o conteúdo geral do flow |
-| Agentes GPT | `list_gpt_blocks`, `get_gpt_block`, `list_gpt_assistant_options` | Starting step, blocos GPT, configuração completa, outputs, compartilhamento do assistant, opções de modelo/idioma/apps/calendários | Blocos não GPT aparecem apenas como `{id, type, name}` quando são alvos visíveis |
+| Agentes GPT | `list_gpt_blocks`, `get_gpt_block`, `list_gpt_assistant_options` | Starting step, blocos GPT, configuração completa, outputs, compartilhamento do assistant, opções de modelo/idioma/apps/calendários | Blocos não GPT aparecem apenas como `{id, type, name}`; apps são observáveis no nível da relação, não como permissão granular de tools runtime |
 | Skills de IA | `list_skills`, `get_skill` | Inventário, descrição e prompt completo de cada skill | Referências fora dos agentes GPT expostos não são observáveis |
 | Campos | `list_user_fields`, `list_bot_fields` | Definições, tipos, descrições e valores de Bot fields | Não comprova preenchimento nem uso por subscribers |
 | Tags | `list_tags` | Definições, descrições e cores | Não mostra subscribers associados nem uso completo em flows |
@@ -49,6 +49,7 @@ Marque como `Indisponível`, sem tentar deduzir por proxies:
 - saúde do canal WhatsApp, qualidade do número e limites;
 - dashboard geral e métricas completas de automação;
 - simulador/teste automatizado de agentes.
+- conjunto efetivo de tools oferecido ao agente durante a conversa, permissões granulares e conclusão de efeitos em sistemas externos.
 
 ## Interpretação segura
 
@@ -56,3 +57,4 @@ Marque como `Indisponível`, sem tentar deduzir por proxies:
 - Um recurso sem referência visível pode ser usado em uma área não exposta.
 - Um contador retornado é evidência somente do valor e do contexto explicitamente fornecidos pela tool.
 - Um objeto ausente é um fato de configuração; dizer que ele “faz falta” exige evidência contextual e deve ser classificado como inferência.
+- Uma skill anexada orienta comportamento, mas não comprova que uma tool foi permitida ou bloqueada tecnicamente.

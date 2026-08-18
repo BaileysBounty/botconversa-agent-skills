@@ -104,6 +104,8 @@ Leia o conteúdo completo das skills relevantes. Avalie:
 
 Compare `mcp_app_ids`, `google_calendar_ids` e as opções atualmente conectadas com o que o prompt afirma fazer. Trate como crítico quando o agent promete consultar, agendar ou executar algo sem a integração necessária. Não anexe um app apenas para satisfazer o texto; confirme intenção, permissão e conexão.
 
+Uma skill anexada ensina comportamento e não deve ser usada para bloquear tools fora do seu tema. Para agentes com ações runtime, verificar se o prompt principal mantém regras permanentes de contato atual, privacidade, recurso inequívoco, confirmação proporcional, prevenção de duplicidade, distinção entre aceite e conclusão e fallback humano. Não penalizar o agente por preservar toda a superfície disponibilizada pelo app MCP.
+
 ### 8. Saídas e roteamento
 
 Avalie `custom_outputs` e conexões observáveis:

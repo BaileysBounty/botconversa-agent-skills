@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "pack_id": "botconversa-runtime-core",
+  "pack_version": "0.2.0",
+  "base_policy_file": "base-policy.md",
+  "default_modules": [
+    "contact-crm",
+    "human-handoff",
+    "kanban",
+    "calendar",
+    "flows-sequences",
+    "integrations"
+  ],
+  "modules": [
+    {
+      "id": "contact-crm",
+      "name": "BC - CRM do contato",
+      "description": "Orienta leitura e atualizacao cuidadosa de tags, campanhas e campos do contato atual.",
+      "file": "skills/contact-crm.md",
+      "risk_tier": "standard",
+      "signals": ["qualificacao", "segmentacao", "cadastro", "personalizacao"],
+      "related_capabilities": ["contexto do contato", "leitura e mutação de tags, campanhas ou campos"]
+    },
+    {
+      "id": "human-handoff",
+      "name": "BC - Handoff humano",
+      "description": "Define quando e como transferir a conversa com contexto útil e sem fechar o atendimento indevidamente.",
+      "file": "skills/human-handoff.md",
+      "risk_tier": "sensitive",
+      "signals": ["atendimento humano", "suporte", "objeção", "caso sensível"],
+      "related_capabilities": ["histórico recente", "atribuição, abertura ou pausa do atendimento"]
+    },
+    {
+      "id": "kanban",
+      "name": "BC - Kanban do contato",
+      "description": "Orienta movimentacoes e atualizacoes de pipeline sem duplicar cards ou escolher colunas ambiguas.",
+      "file": "skills/kanban.md",
+      "risk_tier": "standard",
+      "signals": ["pipeline", "etapa", "lead", "venda", "pos-venda"],
+      "related_capabilities": ["leitura de boards, colunas e card do contato", "mutação idempotente ou verificável"]
+    },
+    {
+      "id": "calendar",
+      "name": "BC - Agenda",
+      "description": "Orienta consulta, criação, reagendamento e cancelamento com confirmação de horário, fuso e participantes.",
+      "file": "skills/calendar.md",
+      "risk_tier": "sensitive",
+      "signals": ["agendamento", "consulta", "reuniao", "visita"],
+      "related_capabilities": ["calendário conectado", "consulta de disponibilidade", "resposta da mutação e eventos vinculados"]
+    },
+    {
+      "id": "flows-sequences",
+      "name": "BC - Flows e sequências",
+      "description": "Orienta acionamentos controlados de flows e sequências com prevencao de loops, duplicidade e agendamento incorreto.",
+      "file": "skills/flows-sequences.md",
+      "risk_tier": "sensitive",
+      "signals": ["follow-up", "nutricao", "automação", "flow", "sequência"],
+      "related_capabilities": ["flows ou sequências disponíveis", "execução direcionada ao contato atual"]
+    },
+    {
+      "id": "integrations",
+      "name": "BC - Integracoes externas",
+      "description": "Orienta Albato e outras integrações com seleção inequívoca, execução única e tratamento transparente de retornos inconclusivos.",
+      "file": "skills/integrations.md",
+      "risk_tier": "sensitive",
+      "signals": ["integração", "sistema externo", "webhook", "automação externa"],
+      "related_capabilities": ["evento Albato ou schema dinâmico disponível", "execução única e status da chamada"]
+    }
+  ]
+}

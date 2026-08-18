@@ -5,9 +5,11 @@ set -euo pipefail
 repo_root="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 codex_root="${CODEX_HOME:-${HOME:?HOME is required}/.codex}"
 destination_root="${BOTCONVERSA_SKILLS_DEST:-$codex_root/skills}"
+plugin_root="$repo_root/plugins/botconversa-agent-skills"
 skills=(
   "botconversa-company-checkup"
   "botconversa-agent-upgrade"
+  "botconversa-runtime-pack"
 )
 
 if [[ $# -gt 0 ]]; then
@@ -16,7 +18,7 @@ if [[ $# -gt 0 ]]; then
 fi
 
 for skill in "${skills[@]}"; do
-  source_dir="$repo_root/skills/$skill"
+  source_dir="$plugin_root/skills/$skill"
   target="$destination_root/$skill"
 
   if [[ -L "$target" ]]; then
@@ -32,7 +34,7 @@ for skill in "${skills[@]}"; do
 done
 
 for skill in "${skills[@]}"; do
-  source_dir="$repo_root/skills/$skill"
+  source_dir="$plugin_root/skills/$skill"
   target="$destination_root/$skill"
   if [[ -L "$target" && "$(readlink "$target")" == "$source_dir" ]]; then
     rm "$target"

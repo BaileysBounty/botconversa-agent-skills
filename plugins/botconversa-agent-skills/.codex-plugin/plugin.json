@@ -1,0 +1,27 @@
+{
+  "name": "botconversa-agent-skills",
+  "version": "0.2.0",
+  "description": "Audite, revise e evolua agentes do BotConversa com workflows reutilizáveis.",
+  "author": {
+    "name": "BotConversa",
+    "url": "https://botconversa.com.br"
+  },
+  "homepage": "https://botconversa.com.br",
+  "repository": "https://github.com/BaileysBounty/botconversa-agent-skills",
+  "keywords": ["botconversa", "mcp", "agents", "whatsapp"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "BotConversa Agent Skills",
+    "shortDescription": "Audite e evolua sua operação no BotConversa.",
+    "longDescription": "Workflows para fazer check-up da companhia, revisar agentes GPT e instalar capacidades operacionais em uma versão de teste.",
+    "developerName": "BotConversa",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Write"],
+    "websiteURL": "https://botconversa.com.br",
+    "defaultPrompt": [
+      "Faça um check-up completo da minha companhia.",
+      "Revise meu agente e prepare uma versão para teste.",
+      "Instale o pack operacional em um novo agente de teste."
+    ]
+  }
+}

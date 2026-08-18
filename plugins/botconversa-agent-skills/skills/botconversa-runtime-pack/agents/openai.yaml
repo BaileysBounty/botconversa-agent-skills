@@ -1,0 +1,4 @@
+interface:
+  display_name: "BotConversa Runtime Pack"
+  short_description: "Instale o pack operacional completo do MCP"
+  default_prompt: "Use $botconversa-runtime-pack para instalar o pack operacional completo em uma nova versão de teste do meu agente."
